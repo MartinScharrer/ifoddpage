@@ -1,18 +1,52 @@
 \ProvidesPackage{ifoddpage}[2011/09/13 v1.0 Conditionals for odd/even page detection]
-\RequirePackage{zref-base}
-
-\zref@newlist{oddpage}
-\zref@addprop{oddpage}{page}
 
 \newcounter{checkoddpage}
+\def\thecheckoddpage{\number\c@checkoddpage}
 
 \newif\ifoddpage
 \newif\iftwosideoddpage
 
+\let\oddpage@checkpage\relax
+\def\oddpage@page{1}
+
+\def\oddpage@label{%
+    \@newl@bel{checkaddpage}%
+}%
+
+
+\def\oddpage@defs{%
+\@ifpackageloaded{zref-base}{%
+    \def\oddpage@checkpage{%
+        \zref@labelbyprops{checkoddpage@\thecheckoddpage}{page}%
+    }%
+    \def\oddpage@page{%
+        \zref@extractdefault{checkoddpage@\thecheckoddpage}{page}{\the\c@page}%
+    }%
+}{%
+    \immediate\write\@auxout{\noexpand\providecommand\noexpand\oddpage@label[2]{}}%
+    \def\oddpage@checkpage{%
+        \@bsphack
+        \protected@write\@auxout{}%
+            {\string\oddpage@label{\thecheckoddpage}{\the\c@page}}%
+        \@esphack
+    }%
+    \def\oddpage@page{%
+        \expandafter\ifx\csname checkoddpage@\thecheckoddpage\endcsname\relax
+            \the\c@page
+        \else
+            \csname checkoddpage@\thecheckoddpage\endcsname
+        \fi
+    }%
+}%
+}
+
+\@onlypreamble\oddpage@defs
+\AtBeginDocument{\oddpage@defs}
+
 \DeclareRobustCommand\checkoddpage{%
     \stepcounter{checkoddpage}%
-    \zref@labelbylist{checkoddpage-\thecheckoddpage}{oddpage}%
-    \ifodd\zref@extractdefault{checkoddpage-\thecheckoddpage}{page}{\c@page}\relax
+    \oddpage@checkpage
+    \ifodd\oddpage@page\relax
         \oddpagetrue
         \twosideoddpagetrue
     \else
