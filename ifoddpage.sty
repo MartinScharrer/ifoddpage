@@ -1,0 +1,42 @@
+\ProvidesPackage{ifoddpage}[2011/09/13 v1.0 Conditionals for odd/even page detection]
+\RequirePackage{zref-base}
+
+\zref@newlist{oddpage}
+\zref@addprop{oddpage}{page}
+
+\newcounter{checkoddpage}
+
+\newif\ifoddpage
+\newif\iftwosideoddpage
+
+\DeclareRobustCommand\checkoddpage{%
+    \stepcounter{checkoddpage}%
+    \zref@labelbylist{checkoddpage-\thecheckoddpage}{oddpage}%
+    \ifodd\zref@extractdefault{checkoddpage-\thecheckoddpage}{page}{\c@page}\relax
+        \oddpagetrue
+        \twosideoddpagetrue
+    \else
+        \oddpagefalse
+        \twosideoddpagefalse
+    \fi
+    \if@twoside\else
+        \twosideoddpagetrue
+    \fi
+}%
+
+\def\@ifoddpage{%
+    \ifoddside
+        \expandafter\@firstoftwo
+    \else
+        \expandafter\@secondoftwo
+    \fi
+}
+
+\def\@iftwosideoddpage{%
+    \iftwosideoddside
+        \expandafter\@firstoftwo
+    \else
+        \expandafter\@secondoftwo
+    \fi
+}
+
