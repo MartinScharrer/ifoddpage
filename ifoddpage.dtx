@@ -116,8 +116,9 @@
 %
 %
 % \section{Similar packages}
-% The \pkg{changepage} also provides much of the functionality of this package, i.e.\ it defines \Macro\checkoddpage and \Macro\ifoddpage but no other of the mentioned macros.
+% The \pkg{changepage} package and the \pkg{memoir} class also provide the core functionality of this package, i.e.\ they define \Macro\checkoddpage and \Macro\ifoddpage but no other of the mentioned macros.
 % That package uses this conditional internally in order to allow the user to change the page layout for odd or even pages, which is its main function.
+% The \pkg{ifoddpage} should work together with that package and class, but should be loaded last to ensure the correct functionality of \Macro{ifoddpageoroneside}.
 % It also uses labels if it is loaded using the \texttt{strict} option.
 % The \pkg{ifoddpage} has the following benefits over \pkg{changepage} (if the page layout doesn't have to be changed):
 %
@@ -125,6 +126,7 @@
 %   \item Smaller code base, because no additional functionality is provided.
 %   \item The \Macro{ifoddapgeoroneside} conditional is also provided which simplifies code which has to handle odd/even margins.
 %   \item The label code uses the same internal \LaTeX-core code as the normal \Macro\label and generates identical error, warning and info messages.
+%   \item The fallback page number is not constant (0) but the current \texttt{page} counter value is used, which is a good approximation.
 % \end{itemize}
 %
 % \StopEventually{}
