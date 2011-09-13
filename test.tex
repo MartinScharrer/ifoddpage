@@ -1,0 +1,28 @@
+\documentclass{article}
+
+\RequirePackage{zref-base}
+\usepackage{ifoddpage}
+\RequirePackage{lipsum}
+
+\def\test{\lipsum[1]\mbox{}{\checkoddpage\ifoddpage odd\else even\fi (\thepage)}\space}
+\def\TEST{%
+\test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\
+\test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\ \test\\
+}
+
+\begin{document}
+
+\TEST
+\TEST
+\TEST
+\TEST
+\TEST
+\TEST
+\TEST
+\TEST
+\TEST
+\TEST
+
+\end{document}
+
+
