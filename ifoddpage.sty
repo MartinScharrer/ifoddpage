@@ -13,35 +13,20 @@
     \@newl@bel{checkaddpage}%
 }%
 
-
-\def\oddpage@defs{%
-\@ifpackageloaded{zref-base}{%
-    \def\oddpage@checkpage{%
-        \zref@labelbyprops{checkoddpage@\thecheckoddpage}{page}%
-    }%
-    \def\oddpage@page{%
-        \zref@extractdefault{checkoddpage@\thecheckoddpage}{page}{\the\c@page}%
-    }%
-}{%
-    \immediate\write\@auxout{\noexpand\providecommand\noexpand\oddpage@label[2]{}}%
-    \def\oddpage@checkpage{%
-        \@bsphack
-        \protected@write\@auxout{}%
-            {\string\oddpage@label{\thecheckoddpage}{\the\c@page}}%
-        \@esphack
-    }%
-    \def\oddpage@page{%
-        \expandafter\ifx\csname checkoddpage@\thecheckoddpage\endcsname\relax
-            \the\c@page
-        \else
-            \csname checkoddpage@\thecheckoddpage\endcsname
-        \fi
-    }%
+\immediate\write\@auxout{\noexpand\providecommand\noexpand\oddpage@label[2]{}}%
+\def\oddpage@checkpage{%
+    \@bsphack
+    \protected@write\@auxout{}%
+        {\string\oddpage@label{\thecheckoddpage}{\the\c@page}}%
+    \@esphack
 }%
-}
-
-\@onlypreamble\oddpage@defs
-\AtBeginDocument{\oddpage@defs}
+\def\oddpage@page{%
+    \expandafter\ifx\csname checkoddpage@\thecheckoddpage\endcsname\relax
+        \the\c@page
+    \else
+        \csname checkoddpage@\thecheckoddpage\endcsname
+    \fi
+}%
 
 \DeclareRobustCommand\checkoddpage{%
     \stepcounter{checkoddpage}%
