@@ -15,7 +15,7 @@
 %
 %    \begin{macrocode}
 \newif\ifoddpage
-\newif\iftwosideoddpage
+\newif\ifoddpageoroneside
 \let\oddpage@checkpage\relax
 %    \end{macrocode}
 %
@@ -68,13 +68,13 @@
     \oddpage@checkpage
     \ifodd\oddpage@page\relax
         \oddpagetrue
-        \twosideoddpagetrue
+        \oddpageoronesidetrue
     \else
         \oddpagefalse
-        \twosideoddpagefalse
+        \oddpageoronesidefalse
     \fi
     \if@twoside\else
-        \twosideoddpagetrue
+        \oddpageoronesidetrue
     \fi
 }%
 %    \end{macrocode}
@@ -94,9 +94,9 @@
 % \end{macro}
 %
 %
-% \begin{macro}{\@iftwosideoddpage}
+% \begin{macro}{\@ifoddpageoroneside}
 %    \begin{macrocode}
-\def\@iftwosideoddpage{%
+\def\@ifoddpageoroneside{%
     \iftwosideoddside
         \expandafter\@firstoftwo
     \else
