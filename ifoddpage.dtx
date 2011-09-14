@@ -34,7 +34,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{87}
+% \CheckSum{90}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -88,6 +88,27 @@
 % if the label is not yet defined, i.e.\ the label was just added or no auxiliary file existed.
 % This fallback code might return wrong values for material just around page breaks, but
 % is better than using a constant.
+%
+% Note that this macro inserts an invisible element (a so called \emph{whatsit}) which is placed on the page.
+% It is possible that this happens to be at the very end of the last line of the page and any other code following it would then be placed
+% on the next page. Some code like |\checkoddpage \ifoddapge odd\else even\fi| might then place the first macro on the current, say even, page but
+% print `|even|' at the top of the next page which is odd. In order to avoid this both the check macro and the output text can be placed in the same
+% box (e.g.\ |\mbox|). If the full content can't be placed in a box, e.g.\ because line breaking is required a |\mbox| can also be substituded by 
+% |\leavevmode| (to start a paragraph if required) and |\hbox| where the |{}| are replaced by |\bgroup| and |\egroup| so two alternative box ends can be specified:
+%
+% \begin{lstlisting}[gobble=2,numbers=none,basicstyle=\ttfamily]
+%    \leavevmode\hbox\bgroup
+%    \checkoddpage
+%    \ifoddpage
+%      odd\egroup\ more text
+%    \else
+%      even\egroup\ other text
+%    \fi
+% \end{lstlisting}
+%
+% \noindent
+% This boxes the \Macro\checkoddpage with the first word of both clauses. Note that in this case it the settings are local to the box scope and \Macro\ifoddpage should
+% be used outside of it again (without another \Macro\checkoddpage).
 %
 % \DescribeMacro{ifoddpage}
 % This \TeX\ conditional is set (locally) by \Macro\checkoddpage.
