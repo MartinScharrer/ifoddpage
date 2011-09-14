@@ -1,15 +1,15 @@
-\documentclass[a4paper]{book}
+%\documentclass[a4paper]{memoir}
+\documentclass[a4paper]{article}
+%\strictpagecheck
 
 %\usepackage[strict]{changepage}
-%\newif\ifoddpageoroneside
-%\def\thecheckoddpage{aa bbd cdd egg}
 \usepackage{ifoddpage}
 \usepackage{hyperref}
 
 
 \usepackage{lipsum}
 
-\def\test{\lipsum*[1]\rlap{\bfseries.\checkoddpage.\ifoddpage{[ odd ] }\else{[ even ] }\fi\ifoddpageoroneside{[ odd or oneside ] }\fi(label number: \thecheckoddpage)(page label: \csname oddpage@page\endcsname)(page counter: \thepage)}\\\lipsum[2]}
+\def\test{\lipsum*[1]\rlap{\bfseries.\checkoddpage.\ifoddpage{[ odd ] }\message{^^JTEST: odd^^J}\else{[ even ] }\message{^^JTEST: even^^J}\fi}\\\lipsum[2]}
 \def\TEST{%
 \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test
 \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test \test
