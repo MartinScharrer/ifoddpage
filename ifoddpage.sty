@@ -4,7 +4,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\newcounter{checkoddpage}
+\newcount\c@checkoddpage
 %    \end{macrocode}
 %
 % \begin{macro}{\thecheckoddpage}
@@ -29,19 +29,18 @@
 % \begin{macro}{\oddpage@label}
 %    \begin{macrocode}
 \def\oddpage@label{%
-    \@newl@bel{checkaddpage}%
+    \@newl@bel{checkoddpage}%
 }%
-\immediate\write\@auxout{\noexpand\providecommand\noexpand\oddpage@label[2]{}}%
+\write\@auxout{\noexpand\providecommand\noexpand\oddpage@label[2]{}}%
 %    \end{macrocode}
 % \end{macro}
 %
 %
 % \begin{macro}{\oddpage@checkpage}
 %    \begin{macrocode}
-\def\oddpage@checkpage{%
+\def\oddpage@checkpage#1{%
     \@bsphack
-    \protected@write\@auxout{}%
-        {\string\oddpage@label{\thecheckoddpage}{\the\c@page}}%
+    \write\@auxout{\string\oddpage@label{#1}{\the\c@page}}%
     \@esphack
 }%
 %    \end{macrocode}
@@ -65,7 +64,7 @@
 %    \begin{macrocode}
 \DeclareRobustCommand\checkoddpage{%
     \stepcounter{checkoddpage}%
-    \oddpage@checkpage
+    \expandafter\oddpage@checkpage\expandafter{\number\c@checkoddpage}%
     \ifodd\oddpage@page\relax
         \oddpagetrue
         \oddpageoronesidetrue
