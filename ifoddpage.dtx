@@ -97,7 +97,7 @@
 %
 % Note that this macro inserts an invisible element (a so called \emph{whatsit}) which is placed on the page.
 % It is possible that this happens to be at the very end of the last line of the page and any other code following it would then be placed
-% on the next page. Some code like |\checkoddpage \ifoddapge odd\else even\fi| might then place the first macro on the current, say even, page but
+% on the next page. Some code like |\checkoddpage \ifoddpage odd\else even\fi| might then place the first macro on the current, say even, page but
 % print `|even|' at the top of the next page which is odd. In order to avoid this both the check macro and the output text can be placed in the same
 % box (e.g.\ |\mbox|). If the full content can't be placed in a box, e.g.\ because line breaking is required a |\mbox| can also be substituded by 
 % |\leavevmode| (to start a paragraph if required) and |\hbox| where the |{}| are replaced by |\bgroup| and |\egroup| so two alternative box ends can be specified:
@@ -151,7 +151,7 @@
 %
 % \begin{itemize}
 %   \item Smaller code base, because no additional functionality is provided.
-%   \item The \Macro{ifoddapgeoroneside} conditional is also provided which simplifies code which has to handle odd/even margins.
+%   \item The \Macro{ifoddpageoroneside} conditional is also provided which simplifies code which has to handle odd/even margins.
 %   \item The label code uses the same internal \LaTeX-core code as the normal \Macro\label and generates identical error, warning and info messages.
 %   \item The fallback page number is not constant (0) but the current \texttt{page} counter value is used, which is a good approximation.
 % \end{itemize}
