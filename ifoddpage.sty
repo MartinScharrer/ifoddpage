@@ -10,20 +10,36 @@
     Conditionals for odd/even page detection]
 %    \end{macrocode}
 %
-%
+% \begin{macro}{\c@checkoddpage}
+% Counter |checkoddpage| is needed to give each use of \Macro\checkoddpage an unique ID for 
 %    \begin{macrocode}
 \newcount\c@checkoddpage
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\thecheckoddpage}
+% Expands to the value of |checkoddpage|, i.e. ID of last used \Macro\checkoddpage.
 %    \begin{macrocode}
 \def\thecheckoddpage{\number\c@checkoddpage}
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\ifoddpage}
+% Conditional: true if used on odd page after \Macro\checkoddpage.
 %    \begin{macrocode}
 \newif\ifoddpage
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ifoddpageoroneside}
+% Conditional: true if used on odd page after \Macro\checkoddpage.
+% Always true if used in a |oneside| document.
+%    \begin{macrocode}
 \newif\ifoddpageoroneside
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
 \let\oddpage@checkpage\relax
 %    \end{macrocode}
 %
@@ -35,6 +51,8 @@
 %
 %
 % \begin{macro}{\oddpage@label}
+% Produces a LaTeX label using the |checkoddpage| counter.
+% An internal LaTeX macro is used for this.
 %    \begin{macrocode}
 \def\oddpage@label{%
     \@newl@bel{checkoddpage}%
@@ -45,6 +63,8 @@
 %
 %
 % \begin{macro}{\oddpage@checkpage}
+% Writes the oddpage label with the current page number to the AUX file,
+% so it can be read back during the following \LaTeX{} runs.
 %    \begin{macrocode}
 \def\oddpage@checkpage#1{%
     \@bsphack
@@ -56,6 +76,9 @@
 %
 %
 % \begin{macro}{\oddpage@page}
+% Returns the page number of the last \Macro\checkoddpage macro.
+% If there is no label for it defined in the AUX file, e.g.\ first compile run,
+% then the current page number is used instead as a fallback.
 %    \begin{macrocode}
 \def\oddpage@page{%
     \expandafter\ifx\csname checkoddpage@\thecheckoddpage\endcsname\relax
@@ -69,6 +92,13 @@
 %
 %
 % \begin{macro}{\checkoddpage}
+% User macro to check if the current page has an odd page number.
+% Increases |checkoddpage| counter to produce an unique ID for this macro usage.
+% Calls \Macro\oddpage@checkpage to produce a reference entry in the AUX file.
+% Then checks if the \Macro\oddpage@page is odd and sets 
+% \Macro{ifoddpage} and \Macro{ifoddpageoroneside} accordantly.
+% Finally checks if the |twoside| setting is active and set \Macro{ifoddpageoroneside}
+% to |true| if so.
 %    \begin{macrocode}
 \DeclareRobustCommand\checkoddpage{%
     \stepcounter{checkoddpage}%
@@ -89,6 +119,7 @@
 %
 %
 % \begin{macro}{\@ifoddpage}
+% Wrapper around \Macro{ifoddpage}. Will expand to the next token if odd, to the second token if not.
 %    \begin{macrocode}
 \def\@ifoddpage{%
     \ifoddpage
@@ -102,6 +133,7 @@
 %
 %
 % \begin{macro}{\@ifoddpageoroneside}
+% Wrapper around \Macro{ifoddpageoroneside}. Will expand to the next token if odd, to the second token if not.
 %    \begin{macrocode}
 \def\@ifoddpageoroneside{%
     \iftwosideoddside
