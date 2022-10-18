@@ -1,9 +1,9 @@
 LaTeX package 'ifoddpage'
-~~~~~~~~~~~~~~~~~~~~~~~~
-Copyright (c) 2011-2022 by Martin Scharrer <martin.scharrer@web.de>
-
-CTAN: http://www.ctan.org/pkg/ifoddpage
-Code repository: https://github.com/MartinScharrer/ifoddpage/
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Copyright (c) 2011-2022 by Martin Scharrer <martin.scharrer@web.de>  
+License: LaTeX Project Public License, v1.3 or later: http://www.latex-project.org/lppl.txt  
+Repository: https://github.com/MartinScharrer/ifoddpage  
+Issues: https://github.com/MartinScharrer/ifoddpage/issues  
 
 This LaTeX package provides a \ifoddpage conditional to determine if the current page is odd or even.
 The macro \checkoddpage must be used direct before to check the page number using a label.
